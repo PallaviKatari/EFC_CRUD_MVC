@@ -1,0 +1,70 @@
+﻿Data First Approach Step - Oracle
+----------------------------
+1.Add Packages
+Install-Package Oracle.EntityFrameworkCore
+Install-Package Oracle.ManagedDataAccess.Core
+2.Add in appSettings.json
+{
+  "ConnectionStrings": {
+    "OracleConnection": "User Id=HR;Password=hr;Data Source=localhost:1521/ORCLPDB1"
+  }
+}
+3.Run the following command in Package Manager Console
+
+Scaffold-DbContext "
+User Id=HR;
+Password=hr;
+Data Source=localhost:1521/ORCLPDB1"
+Oracle.EntityFrameworkCore
+-OutputDir Models
+-Context MyDbContext
+-DataAnnotations
+-UseDatabaseNames
+
+4.Go to th Products Model and add Data Annotations for Validations - [Required]
+5.Create the Controller
+6.Create the views
+7.Set a link in _Layout.cshtml
+8.Run your application
+
+----------------
+Program.cs
+---------------
+using Microsoft.EntityFrameworkCore;
+using WebApp_DFA_EFC.Models;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+// Add DbContext (Oracle – Database First)
+builder.Services.AddDbContext<MyDbContext>
+    (options =>
+    {
+    options.UseOracle(
+    builder.Configuration.GetConnectionString("OracleConnection"));
+    });
+
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseRouting();
+
+    app.UseAuthorization();
+
+    app.MapStaticAssets();
+
+    app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
+    app.Run();

@@ -1,0 +1,20 @@
+﻿Data First Approach Step - SQL SERVER
+----------------------------
+1.Add Packages
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.EntityFrameworkCore.Design
+2.Add in appSettings.json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=ToyotaDb;Trusted_Connection=True;"
+  },
+3.Run the following command in Package Manager Console
+dotnet ef dbcontext scaffold "Server=(localdb)\MSSQLLocalDB;Database=ToyotaDb;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -c MyDbContext --force
+or
+Scaffold-DbContext "Server=Server=(localdb)\MSSQLLocalDB;Database=ToyotaDb;Trusted_Connection=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context MyDbContext -Force
+4.Go to th Products Model and add Data Annotations for Validations - [Required]
+5.Create the Controller
+6.Create the views
+7.Set a link in _Layout.cshtml
+8.Run your application
