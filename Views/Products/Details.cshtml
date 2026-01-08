@@ -1,0 +1,29 @@
+﻿@model WebApp_DFA_EFC.Models.Product1
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2>Product Details</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Price</th>
+        <td>@Model.Price</td>
+    </tr>
+    <tr>
+        <th>Quantity</th>
+        <td>@Model.Quantity</td>
+    </tr>
+    <tr>
+        <th>Created Date</th>
+        <td>@Model.CreatedDate.ToString("dd-MMM-yyyy")</td>
+    </tr>
+</table>
+
+<a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
