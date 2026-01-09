@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 using WebApp_DFA_EFC.Models;
 
 namespace WebApp_DFA_EFC.Controllers
@@ -20,7 +21,15 @@ namespace WebApp_DFA_EFC.Controllers
         {
             var products = await _context.Products1
                 .OrderByDescending(p => p.CreatedDate)
+                .Where(p => p.Price > 100) //filtering condition
                 .ToListAsync();
+
+            // Eager Loading with Include (example, not applicable here as there are no navigation properties)
+            //     2 tables with relationship needed
+            //     var products1 = await _context.Products1
+            //    .OrderByDescending(p => p.CreatedDate)
+            //    .Include(p => p.Price > 100) //filtering condition
+            //    .ToListAsync();
 
             return View(products); //strongly typed view - returns List<Product1> - model in Index.cshtml
         }
@@ -35,6 +44,10 @@ namespace WebApp_DFA_EFC.Controllers
 
             var product = await _context.Products1
                 .FirstOrDefaultAsync(m => m.ProductId == id); //1
+
+            var product1 = await _context.Products1
+                 .Include(m => m.ProductId == id).ToListAsync();
+            //var books = await _context.Books.Include(b => b.Author).ToListAsync();
 
             if (product == null)
                 return NotFound();

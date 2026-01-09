@@ -22,6 +22,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+//app.UseLazyLoadingProxies();
+
 app.UseHttpsRedirection();
 app.UseRouting();
 
